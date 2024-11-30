@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ListDto>
+
+@{
+    ViewData["Title"] = "Index";
+    bool showUserNameColumn = Model.Any() && Model.First().UserName != null;
+}
+
+<h1>ToDoList</h1>
+<p><a asp-action="ListCreate">新增</a></p>
+<table class="table">
+    <thead>
+        <tr>
+            @if (showUserNameColumn)
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.First().UserName)
+                </th>
+            }
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Word)
+            </th>
+            
+            <th>  </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @if (showUserNameColumn)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Word)
+                </td>
+                
+                <td>
+                    <a asp-controller="Home" asp-action="Edit" asp-route-id="@item.Id">編輯</a>
+                    <a asp-controller="Home" asp-action="Delete" asp-route-id="@item.Id">刪除</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
